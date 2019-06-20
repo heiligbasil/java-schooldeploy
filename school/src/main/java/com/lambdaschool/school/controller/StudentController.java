@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,7 +28,7 @@ public class StudentController
 
     // Please note there is no way to add students to course yet!
 
-
+    @PreAuthorize("hasAuthority('ROLE_USERS')")
     @ApiOperation(value = "Return all students", response = Student.class, responseContainer = "List")
     @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page."),
@@ -39,6 +40,7 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USERS')")
     @ApiOperation(value = "Retrieves a student associated with the student ID", response = Student.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Student Found", response = Student.class),
@@ -50,6 +52,7 @@ public class StudentController
         return new ResponseEntity<>(r, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USERS')")
     @ApiOperation(value = "Retrieves a student associated with the studentid", response = Student.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
@@ -65,6 +68,7 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USERS')")
     @ApiOperation(value = "Creates a new student", notes = "The newly created student id will be sent in the location header via URL", response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Student created successfully", response = void.class),
@@ -82,6 +86,7 @@ public class StudentController
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USERS')")
     @ApiOperation(value = "Updates an existing student", notes = "The updated student id will be stored for future retrieval", response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Student updated successfully", response = void.class),
@@ -93,6 +98,7 @@ public class StudentController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USERS')")
     @ApiOperation(value = "Deletes an existing student", notes = "The deleted student will be removed permanently", response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Student deleted successfully", response = void.class),
